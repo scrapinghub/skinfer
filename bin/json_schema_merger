@@ -23,7 +23,11 @@ def run(args):
     for schema in schemas:
         merged = merge_schema(merged, schema)
 
-    print(json.dumps(merged))
+    if args.output:
+        with open(args.output, 'w') as f:
+            json.dump(merged, f, indent=4)
+    else:
+        print(json.dumps(merged, indent=4))
 
 
 if '__main__' == __name__:

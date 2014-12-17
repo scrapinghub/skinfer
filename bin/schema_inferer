@@ -30,7 +30,11 @@ def run(args):
     for sample in get_samples(args.samples):
         merged = merge_schema(merged, generate_schema_for_sample(sample))
 
-    print(json.dumps(merged, indent=4))
+    if args.output:
+        with open(args.output, 'w') as f:
+            json.dump(merged, f, indent=4)
+    else:
+        print(json.dumps(merged, indent=4))
 
 
 if '__main__' == __name__:
@@ -38,6 +42,8 @@ if '__main__' == __name__:
     parser = argparse.ArgumentParser(
         description="Generates a JSON schema based on samples")
 
+    parser.add_argument('-o', dest='output',
+                        help='Write JSON schema to this file')
     parser.add_argument('samples', nargs='+', metavar='SAMPLE',
                         help='JSON data sample files')
 
