@@ -53,7 +53,7 @@ docs:
 	sphinx-apidoc -o docs/ json_schema_merger
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
-	open docs/_build/html/index.html
+	echo Open in your browser:  docs/_build/html/index.html
 
 release: clean
 	python setup.py sdist upload
