@@ -1,0 +1,116 @@
+{
+    "also_viewed": [
+        "http://www.linkedin.com/pub/nicolas-diaz/0/738/463",
+        "http://www.linkedin.com/pub/nicol%C3%A1s-diaz/13/972/669",
+        "http://www.linkedin.com/pub/carles-cecilia-masgrau/4/899/185",
+        "http://www.linkedin.com/pub/neus-lluelles/17/121/679",
+        "http://www.linkedin.com/in/nicolasdiazgamboa",
+        "http://www.linkedin.com/pub/ayelen-tassini/85/569/a57",
+        "http://www.linkedin.com/pub/nicolas-karmy-diaz/18/80b/42",
+        "http://www.linkedin.com/pub/paola-joel/52/571/3ba",
+        "http://www.linkedin.com/pub/jordi-cerdan-gonzalez/75/84a/6a5",
+        "http://www.linkedin.com/in/ndbriere",
+        "http://www.linkedin.com/pub/santi-maci%C3%A0-escatllar/14/90/605",
+        "http://www.linkedin.com/pub/franc-rodriguez-lopez/67/643/747",
+        "http://www.linkedin.com/pub/mar-traver/1b/433/ba0",
+        "http://www.linkedin.com/pub/javier-andorr%C3%A0/76/757/921",
+        "http://www.linkedin.com/pub/philippe-bourgeois/20/167/b4"
+    ],
+    "education": [
+        {
+            "degrees": [
+                "Bachelor's degree",
+                "Informatica"
+            ],
+            "end": "2013",
+            "name": "Universitat d'Andorra",
+            "start": "2010"
+        },
+        {
+            "degrees": [
+                "Bachillerat",
+                "Ciencies Socials"
+            ],
+            "end": "2009",
+            "name": "Col.legi Sant Amengol",
+            "start": "2007"
+        }
+    ],
+    "experience": [
+        {
+            "end": "Present",
+            "organization": [
+                {
+                    "details": "",
+                    "name": "Rm consultors"
+                }
+            ],
+            "start": "July 2013",
+            "title": "Programmer"
+        },
+        {
+            "end": "August 2010",
+            "organization": [
+                {
+                    "details": "",
+                    "name": "Surfers"
+                }
+            ],
+            "start": "January 2009",
+            "title": "Manteniment Sistemes informatics"
+        }
+    ],
+    "family_name": "Diaz",
+    "full_name": "Nicolas Diaz",
+    "given_name": "Nicolas",
+    "groups": [
+        {
+            "name": "JAVA For Developers",
+            "profile_url": "http://www.linkedin.com/groups/JAVA-Developers-2817931"
+        },
+        {
+            "name": "MYSQL PHP Developer",
+            "profile_url": "http://www.linkedin.com/groups/MYSQL-PHP-Developer-3399598"
+        }
+    ],
+    "headline": "Programador",
+    "image_url": "http://m.c.lnkd.licdn.com/mpr/pub/image-5ATmAgAQY5FdzG3O1aAYNbIWIcEAGafResaaN33AIY1aAs7Z5ATamW4QIFNAlV0NPNNR/nicolas-diaz.jpg",
+    "industry": "Program Development",
+    "languages": [
+        {
+            "name": "English"
+        },
+        {
+            "name": "Catalan"
+        },
+        {
+            "name": "Spanish"
+        }
+    ],
+    "linkedin_id": "248216162",
+    "locality": "Andorra",
+    "num_connections": "22",
+    "skills": [
+        "Java",
+        "JavaScript",
+        "HTML",
+        "PHP",
+        "MySQL",
+        "Apache",
+        "Java Enterprise Edition",
+        "Eclipse",
+        "UML",
+        "CSS",
+        "VMware",
+        "VirtualBox",
+        "AS400 system",
+        "AS400 Administration",
+        "COBOL",
+        "Mac OS",
+        "Microsoft Office",
+        "PEX",
+        "Trace"
+    ],
+    "updated": "2014-07-30T20:49:25",
+    "url": "http://www.linkedin.com/pub/nicolas-diaz/6b/163/742"
+}

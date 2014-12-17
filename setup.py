@@ -9,7 +9,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
-    'future >= 0.14.3'
+    'json-schema-generator >= 0.3'
 ]
 
 test_requirements = [

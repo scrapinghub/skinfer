@@ -3,11 +3,12 @@
 from __future__ import absolute_import, division, print_function
 
 
-def merge_properties(first_properties, second_properties):
+def merge_property_list(first_properties, second_properties):
     result = {}
 
     for key, value in first_properties.items():
         if key in second_properties:
+            # TODO: check types here -- if differ, generate an anyOf
             result[key] = merge_objects(value, second_properties[key])
         else:
             result[key] = value
@@ -25,8 +26,8 @@ def merge_objects(first, second):
 
     result = {
         'type': 'object',
-        'properties': merge_properties(first.get('properties', {}),
-                                       second.get('properties', {})),
+        'properties': merge_property_list(first.get('properties', {}),
+                                          second.get('properties', {})),
         'required': required
     }
 
