@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, division, print_function
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from json_schema_merger.json_schema_merger import merge_schema
+import json
+
+def get_schemas(schema_filelist):
+    for schema_file in args.schemas:
+        with open(schema_file) as f:
+            yield json.load(f)
+
+
+def run(args):
+    schemas = get_schemas(args.schemas)
+
+    merged = next(schemas)
+    for schema in schemas:
+        merged = merge_schema(merged, schema)
+
+    print(json.dumps(merged))
+
+
+if '__main__' == __name__:
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="Simple JSON Schema Merger Tool")
+
+    parser.add_argument('-o', dest='output',
+                        help='Write JSON schema to this file')
+    parser.add_argument('schemas', nargs='+',
+                        help='List of JSON schema files to merge')
+
+    args = parser.parse_args()
+    run(args)

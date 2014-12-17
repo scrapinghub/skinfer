@@ -29,6 +29,10 @@ setup(
     ],
     package_dir={'json_schema_merger':
                  'json_schema_merger'},
+    scripts=[
+        'bin/schema_inferer',
+        'bin/json_schema_merger',
+    ],
     include_package_data=True,
     install_requires=requirements,
     license="BSD",

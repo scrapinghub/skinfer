@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_import, division, print_function
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+import json
+from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
+from json_schema_merger.json_schema_merger import merge_schema
+
+
+def get_samples(sample_files):
+    for sample in sample_files:
+        with open(sample) as f:
+            yield json.load(f)
+
+
+def generate_schema_for_sample(sample):
+    return IncompleteDraft4SchemaGenerator(sample).to_dict()
+
+
+def run(args):
+    samples = get_samples(args.samples)
+
+    merged = generate_schema_for_sample(next(samples))
+
+    for sample in get_samples(args.samples):
+        merged = merge_schema(merged, generate_schema_for_sample(sample))
+
+    print(json.dumps(merged, indent=4))
+
+
+if '__main__' == __name__:
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="Generates a JSON schema based on samples")
+
+    parser.add_argument('samples', nargs='+', metavar='SAMPLE',
+                        help='JSON data sample files')
+
+    args = parser.parse_args()
+    run(args)
