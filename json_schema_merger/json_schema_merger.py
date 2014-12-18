@@ -21,8 +21,10 @@ def merge_property_list(first_properties, second_properties):
 
 
 def get_reserved_keys(schema_type):
-    if schema_type:
+    if schema_type == 'object':
         return set(['type', 'properties', 'required'])
+    if schema_type == 'array':
+        return set(['type', 'items'])
     else:
         raise NotImplementedError(
             "Missing implementation for schema type: %s" % schema_type)
@@ -55,7 +57,27 @@ def merge_objects(first, second):
 
 
 def merge_strings(first, second):
+    # TODO: add support for schemas more complex than {"type": "string"}
     return second
+
+
+def merge_arrays(first, second):
+    def merge_items(first_items, second_items):
+        if first_items and second_items:
+            return _merge_schema(first_items, second_items)
+
+    items = merge_items(first.get('items'), second.get('items'))
+
+    result =  {
+        'type': 'array',
+    }
+
+    if items:
+        result['items'] = items
+
+    result.update(copy_nonreserved_keys(first, second))
+
+    return result
 
 
 def _merge_schema(first, second):
@@ -68,6 +90,8 @@ def _merge_schema(first, second):
         return merge_objects(first, second)
     elif schema_type == 'string':
         return merge_strings(first, second)
+    elif schema_type == 'array':
+        return merge_arrays(first, second)
     else:
         raise NotImplementedError("Type %s is not yet supported" % schema_type)
 

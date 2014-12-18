@@ -56,6 +56,16 @@ class TestJsonSchemaMerger(unittest.TestCase):
             fixtures.REQUIRING_SOME_PROPERTY,
             fixtures.REQUIRING_SOME_PROPERTY,
         )
+        self.check_merge_result(
+            fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_OPTIONAL_AND_REQUIRED_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_OPTIONAL_AND_REQUIRED_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_OPTIONAL_AND_REQUIRED_PROPERTY,
+        )
+        self.check_merge_result(
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY,
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY,
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY,
+        )
 
     def test_merge_schemas_with_nested_properties(self):
         self.check_merge_result(
@@ -73,6 +83,44 @@ class TestJsonSchemaMerger(unittest.TestCase):
                             "nested_required": {"type": "string"},
                         }
                     },
+                }
+            }
+        )
+
+    def test_merge_one_schema_with_nested_array_property(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_SOME_PROPERTY,
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY,
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "a_list": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                    },
+                    "something": {"type": "string"}
+                }
+            }
+        )
+
+    def test_merge_both_schemas_with_nested_array_property(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY,
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY_PLUS_ANOTHER,
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "required": ["a_list"],
+                "properties": {
+                    "a_list": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                    },
+                    "another_list": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                    }
                 }
             }
         )
