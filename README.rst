@@ -33,18 +33,20 @@ that represents the common properties::
     
       optional arguments:
         -h, --help  show this help message and exit
-          -o OUTPUT   Write JSON schema to this file
+        -o OUTPUT   Write JSON schema to this file
 
 
 A tool that given a list of JSON files, tries to infer the common schema among them::
 
     $ ./bin/schema_inferer --help
-    usage: schema_inferer [-h] SAMPLE [SAMPLE ...]
-
+    usage: schema_inferer [-h] [-o OUTPUT] [--jsonlines] SAMPLE [SAMPLE ...]
+    
     Generates a JSON schema based on samples
-
+    
     positional arguments:
-      SAMPLE      JSON data sample files
-
+      SAMPLE       JSON data sample files
+    
     optional arguments:
-      -h, --help  show this help message and exit
+      -h, --help   show this help message and exit
+      -o OUTPUT    Write JSON schema to this file
+      --jsonlines  Assume samples are in JSON lines format

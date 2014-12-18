@@ -15,7 +15,11 @@ from json_schema_merger.json_schema_merger import merge_schema
 def get_samples(args):
     for sample in args.samples:
         with open(sample) as f:
-            yield json.load(f)
+            if args.jsonlines:
+                for line in f:
+                    yield json.loads(line)
+            else:
+                yield json.load(f)
 
 
 def generate_schema_for_sample(sample):
@@ -44,6 +48,8 @@ if '__main__' == __name__:
 
     parser.add_argument('-o', dest='output',
                         help='Write JSON schema to this file')
+    parser.add_argument('--jsonlines', action='store_true',
+                        help='Assume samples are in JSON lines format')
     parser.add_argument('samples', nargs='+', metavar='SAMPLE',
                         help='JSON data sample files')
 
