@@ -1,66 +1,78 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 from json_schema_merger.json_schema_merger import merge_schema
 import unittest
 from tests import fixtures
 
 
 class TestJsonSchemaMerger(unittest.TestCase):
+    def check_merge_result(self, first, second, expected):
+        first_copy = first.copy()
+        second_copy = second.copy()
 
-    def test_merge_with_empty_object(self):
-        # when:
-        first_copy = fixtures.REQUIRE_OBJECT_TYPE.copy()
-        second_copy = fixtures.REQUIRING_SOME_PROPERTY.copy()
+        merged = merge_schema(first, second)
+        merged_reversed = merge_schema(second, first)
 
-        merged = merge_schema(fixtures.REQUIRE_OBJECT_TYPE,
-                              fixtures.REQUIRING_SOME_PROPERTY)
+        self.assertEqual(merged, expected)
+        self.assertEqual(merged_reversed, expected)
+        self.assertEqual(merged, merged_reversed)
 
-        # then:
-        self.assertEqual(merged, {
-            "type": "object",
-            "required": [],
-            "properties": {
-                "something": {"type": "string"},
-            }
-        })
-        # and:
-        self.assertEqual(fixtures.REQUIRE_OBJECT_TYPE, first_copy)
-        self.assertEqual(fixtures.REQUIRING_SOME_PROPERTY, second_copy)
+        # ensuring we're not touching the originals:
+        self.assertEqual(first, first_copy)
+        self.assertEqual(second, second_copy)
 
-    def test_merge_two_simple_objects(self):
-        # when:
-        merged = merge_schema(fixtures.REQUIRING_SOME_PROPERTY,
-                              fixtures.REQUIRING_ANOTHER_PROPERTY)
-
-        # then:
-        self.assertEqual(merged, {
-            "type": "object",
-            "required": [],
-            "properties": {
-                "something": {"type": "string"},
-                "another": {"type": "string"},
-            }
-        })
-
-    def test_merge_nested_properties(self):
-        # when:
-        merged = merge_schema(
+    def test_merge_required_property_with_empty_object_schema(self):
+        self.check_merge_result(
+            fixtures.REQUIRE_OBJECT_TYPE,
             fixtures.REQUIRING_SOME_PROPERTY,
-            fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_OPTIONAL_AND_REQUIRED_PROPERTY)
-
-        self.assertEqual(merged, {
-            "type": "object",
-            "required": ["something"],
-            "properties": {
-                "something": {
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                        "nested_optional": {"type": "string"},
-                        "nested_required": {"type": "string"},
-                    }
-                },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string"},
+                }
             }
-        })
+        )
+
+    def test_merge_schemas_with_different_required_properties(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_SOME_PROPERTY,
+            fixtures.REQUIRING_ANOTHER_PROPERTY,
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string"},
+                    "another": {"type": "string"},
+                }
+            }
+        )
+
+    def test_merge_same_schema_gives_itself(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_SOME_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY,
+        )
+
+    def test_merge_schemas_with_nested_properties(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_SOME_OBJECT_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_OPTIONAL_AND_REQUIRED_PROPERTY,
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "required": ["something"],
+                "properties": {
+                    "something": {
+                        "type": "object",
+                        "properties": {
+                            "nested_optional": {"type": "string"},
+                            "nested_required": {"type": "string"},
+                        }
+                    },
+                }
+            }
+        )

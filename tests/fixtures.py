@@ -23,6 +23,16 @@ REQUIRING_ANOTHER_PROPERTY = {
     }
 }
 
+REQUIRING_SOME_OBJECT_PROPERTY = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    'type': 'object',
+    "required": ['something'],
+    "properties": {
+        "something": {"type": "object"},
+    }
+}
+
+
 REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY = {
     '$schema': u'http://json-schema.org/draft-04/schema',
     "type": "object",

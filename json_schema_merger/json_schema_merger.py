@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
+import itertools
 
 
 def merge_property_list(first_properties, second_properties):
@@ -8,8 +9,7 @@ def merge_property_list(first_properties, second_properties):
 
     for key, value in first_properties.items():
         if key in second_properties:
-            # TODO: check types here -- if differ, generate an anyOf
-            result[key] = merge_objects(value, second_properties[key])
+            result[key] = _merge_schema(value, second_properties[key])
         else:
             result[key] = value
 
@@ -20,6 +20,22 @@ def merge_property_list(first_properties, second_properties):
     return result
 
 
+def get_reserved_keys(schema_type):
+    if schema_type:
+        return set(['type', 'properties', 'required'])
+    else:
+        raise NotImplementedError(
+            "Missing implementation for schema type: %s" % schema_type)
+
+
+def copy_nonreserved_keys(first, second):
+    reserved_keys = get_reserved_keys(first.get('type'))
+
+    return ((key, value)
+            for key, value in itertools.chain(first.items(), second.items())
+            if key not in reserved_keys)
+
+
 def merge_objects(first, second):
     required = list(set(first.get('required', [])) &
                     set(second.get('required', [])))
@@ -28,10 +44,32 @@ def merge_objects(first, second):
         'type': 'object',
         'properties': merge_property_list(first.get('properties', {}),
                                           second.get('properties', {})),
-        'required': required
     }
 
+    if required:
+        result['required'] = required
+
+    result.update(copy_nonreserved_keys(first, second))
+
     return result
+
+
+def merge_strings(first, second):
+    return second
+
+
+def _merge_schema(first, second):
+    assert first.get('type') == second.get('type'), (
+        "Merging schemas for different types is not yet supported (%s, %s)" % (first.get('type'), second.get('type')))
+
+    schema_type = first.get('type')
+
+    if schema_type == 'object':
+        return merge_objects(first, second)
+    elif schema_type == 'string':
+        return merge_strings(first, second)
+    else:
+        raise NotImplementedError("Type %s is not yet supported" % schema_type)
 
 
 def merge_schema(first, second):
