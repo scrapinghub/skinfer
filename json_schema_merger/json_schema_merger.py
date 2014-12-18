@@ -68,7 +68,7 @@ def merge_arrays(first, second):
 
     items = merge_items(first.get('items'), second.get('items'))
 
-    result =  {
+    result = {
         'type': 'array',
     }
 
@@ -82,7 +82,8 @@ def merge_arrays(first, second):
 
 def _merge_schema(first, second):
     assert first.get('type') == second.get('type'), (
-        "Merging schemas for different types is not yet supported (%s, %s)" % (first.get('type'), second.get('type')))
+        "Merging schemas for different types is not yet supported (%s, %s)" % (
+            first.get('type'), second.get('type')))
 
     schema_type = first.get('type')
 

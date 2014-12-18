@@ -10,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from json_schema_merger.json_schema_merger import merge_schema
 import json
 
+
 def get_schemas(schema_filelist):
     for schema_file in args.schemas:
         with open(schema_file) as f:

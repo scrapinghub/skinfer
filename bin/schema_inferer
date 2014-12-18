@@ -6,38 +6,20 @@ from __future__ import absolute_import, division, print_function
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
+from json_schema_merger import schema_inferer
 import json
-from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
-from json_schema_merger.json_schema_merger import merge_schema
 
 
 def get_samples(args):
-    for sample in args.samples:
-        with open(sample) as f:
-            if args.jsonlines:
-                for line in f:
-                    yield json.loads(line)
-            else:
-                yield json.load(f)
+    if args.jsonlines:
+        return schema_inferer.load_samples_from_jsonlines(args.samples)
 
-
-def generate_schema_for_sample(sample):
-    return IncompleteDraft4SchemaGenerator(sample).to_dict()
-
-
-def generate_and_merge_schemas(samples):
-    merged = generate_schema_for_sample(next(samples))
-
-    for sample in samples:
-        merged = merge_schema(merged, generate_schema_for_sample(sample))
-
-    return merged
+    return schema_inferer.load_samples_from_json(args.samples)
 
 
 def run(args):
     try:
-        merged = generate_and_merge_schemas(get_samples(args))
+        merged = schema_inferer.generate_and_merge_schemas(get_samples(args))
 
         if args.output:
             with open(args.output, 'w') as f:
