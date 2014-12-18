@@ -12,8 +12,8 @@ from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
 from json_schema_merger.json_schema_merger import merge_schema
 
 
-def get_samples(sample_files):
-    for sample in sample_files:
+def get_samples(args):
+    for sample in args.samples:
         with open(sample) as f:
             yield json.load(f)
 
@@ -23,11 +23,11 @@ def generate_schema_for_sample(sample):
 
 
 def run(args):
-    samples = get_samples(args.samples)
+    samples = get_samples(args)
 
     merged = generate_schema_for_sample(next(samples))
 
-    for sample in get_samples(args.samples):
+    for sample in samples:
         merged = merge_schema(merged, generate_schema_for_sample(sample))
 
     if args.output:
