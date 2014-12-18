@@ -26,19 +26,29 @@ def generate_schema_for_sample(sample):
     return IncompleteDraft4SchemaGenerator(sample).to_dict()
 
 
-def run(args):
-    samples = get_samples(args)
-
+def generate_and_merge_schemas(samples):
     merged = generate_schema_for_sample(next(samples))
 
     for sample in samples:
         merged = merge_schema(merged, generate_schema_for_sample(sample))
 
-    if args.output:
-        with open(args.output, 'w') as f:
-            json.dump(merged, f, indent=4)
-    else:
-        print(json.dumps(merged, indent=4))
+    return merged
+
+
+def run(args):
+    try:
+        merged = generate_and_merge_schemas(get_samples(args))
+
+        if args.output:
+            with open(args.output, 'w') as f:
+                json.dump(merged, f, indent=4)
+        else:
+            print(json.dumps(merged, indent=4))
+    except ValueError as e:
+        if 'Extra data: line' in e.message:
+            print("\nInvalid output: maybe you're missing --jsonlines option?\n"
+                  "NOTE: the --jsonlines option must appear before the samples arg\n")
+        raise
 
 
 if '__main__' == __name__:
