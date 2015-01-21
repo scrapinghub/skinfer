@@ -62,9 +62,24 @@ def merge_strings(first, second):
 
 
 def merge_arrays(first, second):
+    def are_json_schema_tuples(first_items, second_items):
+        return all([
+            isinstance(first_items, list),
+            isinstance(second_items, list),
+            len(first_items) == len(second_items)
+        ])
+
+    def merge_tuples(first_items, second_items):
+        return [_merge_schema(e1, e2) for e1, e2 in zip(first_items, second_items)]
+
     def merge_items(first_items, second_items):
-        if first_items and second_items:
-            return _merge_schema(first_items, second_items)
+        if not (first_items and second_items):
+            return None
+
+        if are_json_schema_tuples(first_items, second_items):
+            return merge_tuples(first_items, second_items)
+
+        return _merge_schema(first_items, second_items)
 
     items = merge_items(first.get('items'), second.get('items'))
 

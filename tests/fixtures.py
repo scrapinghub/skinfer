@@ -1,4 +1,16 @@
 from __future__ import unicode_literals
+import os
+import json
+
+
+TEST_DIR = os.path.dirname(__file__)
+SAMPLES_DIR = os.path.join(TEST_DIR, 'samples')
+
+
+def get_sample(sample_filename):
+    with open(os.path.join(SAMPLES_DIR, sample_filename)) as f:
+        return json.load(f)
+
 
 REQUIRE_OBJECT_TYPE = {
     '$schema': u'http://json-schema.org/draft-04/schema',
@@ -88,6 +100,22 @@ REQUIRING_AN_ARRAY_PROPERTY_PLUS_ANOTHER = {
         "another_list": {
             "type": "array",
             "items": {"type": "number"},
+        },
+    }
+}
+
+
+REQUIRING_AN_ARRAY_PROPERTY_WITH_TUPLE_VALIDATION = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    "type": "object",
+    "required": ["array_with_tuple"],
+    "properties": {
+        "array_with_tuple": {
+            "type": "array",
+            "items": [
+                {"type": "string"},
+                {"type": "string"},
+            ],
         },
     }
 }

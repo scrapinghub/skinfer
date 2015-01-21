@@ -23,7 +23,7 @@ def generate_schema_for_sample(sample):
 
 
 def generate_and_merge_schemas(samples):
-    merged = generate_schema_for_sample(next(samples))
+    merged = generate_schema_for_sample(next(iter(samples)))
 
     for sample in samples:
         merged = merge_schema(merged, generate_schema_for_sample(sample))

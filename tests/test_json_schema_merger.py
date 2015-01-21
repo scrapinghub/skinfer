@@ -124,3 +124,20 @@ class TestJsonSchemaMerger(unittest.TestCase):
                 }
             }
         )
+
+    def test_merge_array_with_tuple_validation(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY_WITH_TUPLE_VALIDATION,
+            fixtures.REQUIRING_AN_ARRAY_PROPERTY_WITH_TUPLE_VALIDATION,
+            {
+                '$schema': 'http://json-schema.org/draft-04/schema',
+                "required": ["array_with_tuple"],
+                'type': 'object',
+                'properties': {
+                    'array_with_tuple': {
+                        'items': [{'type': 'string'}, {'type': 'string'}],
+                        'type': u'array'
+                    }
+                }
+            }
+        )

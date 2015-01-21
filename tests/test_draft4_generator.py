@@ -5,12 +5,6 @@ from __future__ import absolute_import, division, print_function
 from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
 import unittest
 from tests import fixtures
-import os
-import json
-
-
-TEST_DIR = os.path.dirname(__file__)
-SAMPLES_DIR = os.path.join(TEST_DIR, 'samples')
 
 
 def generate_schema(sample):
@@ -30,8 +24,7 @@ class TestDraft4SchemaGenerator(unittest.TestCase):
                          fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY)
 
     def test_with_linkedin_minimal_example(self):
-        with open(os.path.join(SAMPLES_DIR, 'minimal-1.json')) as f:
-            data = json.load(f)
+        data = fixtures.get_sample('minimal-1.json')
 
         self.assertEqual(generate_schema(data), {
             '$schema': u'http://json-schema.org/draft-04/schema',
