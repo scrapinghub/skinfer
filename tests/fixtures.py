@@ -26,6 +26,15 @@ REQUIRING_SOME_PROPERTY = {
     }
 }
 
+REQUIRING_NULL_PROPERTY = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    'type': 'object',
+    "required": ['something'],
+    "properties": {
+        "something": {"type": "null"},
+    }
+}
+
 REQUIRING_NUMBER_PROPERTY = {
     '$schema': u'http://json-schema.org/draft-04/schema',
     'type': 'object',

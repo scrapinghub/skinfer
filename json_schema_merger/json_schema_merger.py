@@ -99,10 +99,24 @@ def merge_arrays(first, second):
     return result
 
 
+def merge_with_any_of(first, second):
+    first_any_of = first['anyOf'] if 'anyOf' in first else [first]
+    second_any_of = second['anyOf'] if 'anyOf' in second else [second]
+
+    any_of = []
+    for schema in first_any_of + second_any_of:
+        if schema not in any_of:
+            any_of.append(schema)
+
+    return {"anyOf": any_of}
+
+
 def _merge_schema(first, second):
-    assert first.get('type') == second.get('type'), (
-        "Merging schemas for different types is not yet supported (%s, %s)" % (
-            first.get('type'), second.get('type')))
+    if first.get('type') != second.get('type'):
+        return merge_with_any_of(first, second)
+
+    if 'anyOf' in first or 'anyOf' in second:
+        return merge_with_any_of(first, second)
 
     schema_type = first.get('type')
 

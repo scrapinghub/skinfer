@@ -7,6 +7,28 @@ import unittest
 from tests import fixtures
 
 
+def recursive_sort(obj):
+    """
+    Recursively sort list or dict nested lists
+    """
+
+    if isinstance(obj, dict):
+        for key, val in obj.iteritems():
+            obj[key] = recursive_sort(val)
+        _sorted = obj
+
+    elif isinstance(obj, list):
+        new_list = []
+        for val in obj:
+            new_list.append(recursive_sort(val))
+        _sorted = sorted(new_list)
+
+    else:
+        _sorted = obj
+
+    return _sorted
+
+
 class TestJsonSchemaMerger(unittest.TestCase):
     def check_merge_result(self, first, second, expected):
         first_copy = first.copy()
@@ -142,7 +164,7 @@ class TestJsonSchemaMerger(unittest.TestCase):
             }
         )
 
-    def test_merge_numbers(self):
+    def test_merge_simple_numbers(self):
         self.check_merge_result(
             fixtures.REQUIRING_NUMBER_PROPERTY,
             fixtures.REQUIRING_NUMBER_PROPERTY,
@@ -157,3 +179,43 @@ class TestJsonSchemaMerger(unittest.TestCase):
                 }
             }
         )
+
+    def assertSchemaEqual(self, first, second):
+        self.assertEqual(recursive_sort(first), recursive_sort(second))
+
+    def test_merge_string_and_null(self):
+        merged = merge_schema(
+            fixtures.REQUIRING_NULL_PROPERTY,
+            fixtures.REQUIRING_SOME_PROPERTY,
+        )
+        expected = {
+            '$schema': 'http://json-schema.org/draft-04/schema',
+            'type': 'object',
+            'required': ['something'],
+            'properties': {
+                'something': {
+                    'anyOf': [
+                        {'type': 'string'},
+                        {'type': 'null'},
+                    ]
+                }
+            }
+        }
+        self.assertSchemaEqual(merged, expected)
+
+    def test_merge_anyof(self):
+        schema_with_anyof = {
+            '$schema': 'http://json-schema.org/draft-04/schema',
+            'type': 'object',
+            'required': ['something'],
+            'properties': {
+                'something': {
+                    'anyOf': [
+                        {'type': 'string'},
+                        {'type': 'null'},
+                    ]
+                }
+            }
+        }
+        merged = merge_schema(fixtures.REQUIRING_SOME_PROPERTY, schema_with_anyof)
+        self.assertSchemaEqual(merged, schema_with_anyof)
