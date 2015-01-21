@@ -26,6 +26,15 @@ REQUIRING_SOME_PROPERTY = {
     }
 }
 
+REQUIRING_NUMBER_PROPERTY = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    'type': 'object',
+    "required": ['number_of_followers'],
+    "properties": {
+        "number_of_followers": {"type": "number"},
+    }
+}
+
 REQUIRING_ANOTHER_PROPERTY = {
     '$schema': u'http://json-schema.org/draft-04/schema',
     "type": "object",

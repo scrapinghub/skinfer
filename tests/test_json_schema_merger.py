@@ -141,3 +141,19 @@ class TestJsonSchemaMerger(unittest.TestCase):
                 }
             }
         )
+
+    def test_merge_numbers(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_NUMBER_PROPERTY,
+            fixtures.REQUIRING_NUMBER_PROPERTY,
+            {
+                '$schema': 'http://json-schema.org/draft-04/schema',
+                'type': 'object',
+                'required': ['number_of_followers'],
+                'properties': {
+                    'number_of_followers': {
+                        'type': 'number',
+                    }
+                }
+            }
+        )
