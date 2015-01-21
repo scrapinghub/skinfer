@@ -44,6 +44,15 @@ REQUIRING_NUMBER_PROPERTY = {
     }
 }
 
+REQUIRING_BOOLEAN_PROPERTY = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    'type': 'object',
+    "required": ['is_this_on'],
+    "properties": {
+        "is_this_on": {"type": "boolean"},
+    }
+}
+
 REQUIRING_ANOTHER_PROPERTY = {
     '$schema': u'http://json-schema.org/draft-04/schema',
     "type": "object",

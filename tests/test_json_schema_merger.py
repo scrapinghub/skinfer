@@ -180,6 +180,22 @@ class TestJsonSchemaMerger(unittest.TestCase):
             }
         )
 
+    def test_merge_simple_boolean(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_BOOLEAN_PROPERTY,
+            fixtures.REQUIRING_BOOLEAN_PROPERTY,
+            {
+                '$schema': 'http://json-schema.org/draft-04/schema',
+                'type': 'object',
+                'required': ['is_this_on'],
+                'properties': {
+                    'is_this_on': {
+                        'type': 'boolean',
+                    }
+                }
+            }
+        )
+
     def assertSchemaEqual(self, first, second):
         self.assertEqual(recursive_sort(first), recursive_sort(second))
 

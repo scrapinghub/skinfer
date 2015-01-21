@@ -65,6 +65,10 @@ def merge_numbers(first, second):
     return {"type": "number"}
 
 
+def merge_boolean(first, second):
+    return {"type": "boolean"}
+
+
 def merge_arrays(first, second):
     def are_json_schema_tuples(first_items, second_items):
         return all([
@@ -128,6 +132,8 @@ def _merge_schema(first, second):
         return merge_arrays(first, second)
     elif schema_type == 'number':
         return merge_numbers(first, second)
+    elif schema_type == 'boolean':
+        return merge_boolean(first, second)
     else:
         raise NotImplementedError("Type %s is not yet supported" % schema_type)
 
