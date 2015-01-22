@@ -235,3 +235,17 @@ class TestJsonSchemaMerger(unittest.TestCase):
         }
         merged = merge_schema(fixtures.REQUIRING_SOME_PROPERTY, schema_with_anyof)
         self.assertSchemaEqual(merged, schema_with_anyof)
+
+    def test_merge_null(self):
+        self.check_merge_result(
+            fixtures.REQUIRING_NULL_PROPERTY,
+            fixtures.REQUIRING_NULL_PROPERTY,
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "required": ["something"],
+                "properties": {
+                    "something": {"type": "null"},
+                }
+            }
+        )
