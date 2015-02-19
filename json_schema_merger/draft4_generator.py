@@ -55,3 +55,15 @@ class IncompleteDraft4SchemaGenerator(json_schema_generator.SchemaGenerator):
                     schema_dict['items'].append(self.to_dict(item, idx, False))
 
         return schema_dict
+
+
+class Draft4SchemaGeneratorWithLength(IncompleteDraft4SchemaGenerator):
+
+    def to_dict(self, base_object=None, object_id=None, first_level=True):
+        schema_dict = super(Draft4SchemaGeneratorWithLength, self)\
+                .to_dict(base_object=base_object,
+                        object_id=object_id, first_level=first_level)
+
+        if schema_dict.get('type') in ('string', ):
+            schema_dict['sampled_max_length'] = len(base_object)
+        return schema_dict

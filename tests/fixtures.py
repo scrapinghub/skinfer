@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import os
 import json
+from copy import deepcopy
 
 
 TEST_DIR = os.path.dirname(__file__)
@@ -146,3 +147,9 @@ REQUIRING_AN_ARRAY_PROPERTY_WITH_TUPLE_VALIDATION = {
         },
     }
 }
+
+REQUIRING_SOME_PROPERTY_WITH_LENGTH = deepcopy(REQUIRING_SOME_PROPERTY)
+REQUIRING_SOME_PROPERTY_WITH_LENGTH['properties']['something']['sampled_max_length'] = 2
+
+REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY_WITH_LENGTH = deepcopy(REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY)
+REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY_WITH_LENGTH['properties']['something']['properties']['nested_required']['sampled_max_length'] = 1
