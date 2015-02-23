@@ -1,20 +1,28 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
+import gzip
 from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
 from json_schema_merger.json_schema_merger import merge_schema
 
 
+def gzopen(filename):
+    if '.gz' in filename:
+        return gzip.open(filename)
+
+    return open(filename)
+
+
 def load_samples_from_jsonlines(file_list):
     for filename in file_list:
-        with open(filename) as f:
+        with gzopen(filename) as f:
             for line in f:
                 yield json.loads(line)
 
 
 def load_samples_from_json(file_list):
     for filename in file_list:
-        with open(filename) as f:
+        with gzopen(filename) as f:
             yield json.load(f)
 
 
