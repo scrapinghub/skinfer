@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from json_schema_merger.json_schema_merger import merge_schema
+from skinfer.json_schema_merger import merge_schema
 import unittest
 from tests import fixtures
 

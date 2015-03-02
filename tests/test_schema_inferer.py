@@ -4,7 +4,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 import unittest
 from tests import fixtures
-from json_schema_merger import schema_inferer
+from skinfer import schema_inferer
 
 
 class TestJsonSchemaInferer(unittest.TestCase):

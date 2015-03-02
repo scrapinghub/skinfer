@@ -2,8 +2,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import json
 import gzip
-from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
-from json_schema_merger.json_schema_merger import merge_schema
+from skinfer.draft4_generator import IncompleteDraft4SchemaGenerator
+from skinfer.json_schema_merger import merge_schema
 
 
 def gzopen(filename):

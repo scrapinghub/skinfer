@@ -17,18 +17,18 @@ test_requirements = [
 ]
 
 setup(
-    name='json_schema_merger',
+    name='skinfer',
     version='0.1.0',
     description='Simple tool to merge JSON schemas',
     long_description=readme + '\n\n' + history,
     author='Scrapinghub',
     author_email='info@scrapinghub.com',
-    url='https://github.com/scrapinghub/json_schema_merger',
+    url='https://github.com/scrapinghub/skinfer',
     packages=[
-        'json_schema_merger',
+        'skinfer',
     ],
-    package_dir={'json_schema_merger':
-                 'json_schema_merger'},
+    package_dir={'skinfer':
+                 'skinfer'},
     scripts=[
         'bin/schema_inferer',
         'bin/json_schema_merger',
@@ -37,7 +37,7 @@ setup(
     install_requires=requirements,
     license="BSD",
     zip_safe=False,
-    keywords='json_schema_merger',
+    keywords='skinfer json-schema json schema inferer merger',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

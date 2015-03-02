@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, division, print_function
-from json_schema_merger.draft4_generator import IncompleteDraft4SchemaGenerator
+from skinfer.draft4_generator import IncompleteDraft4SchemaGenerator
 import unittest
 from tests import fixtures
 

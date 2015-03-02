@@ -6,4 +6,4 @@ __author__ = 'Scrapinghub'
 __email__ = 'info@scrapinghub.com'
 __version__ = '0.1.0'
 
-from json_schema_merger.json_schema_merger import merge_schema  # NOQA
+from skinfer.json_schema_merger import merge_schema  # NOQA

@@ -33,7 +33,7 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 json_schema_merger tests
+	flake8 skinfer tests
 
 test:
 	python setup.py test
@@ -42,15 +42,15 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source json_schema_merger setup.py test
+	coverage run --source skinfer setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/json_schema_merger.rst
+	rm -f docs/skinfer.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ json_schema_merger
+	sphinx-apidoc -o docs/ skinfer
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	echo Open in your browser:  docs/_build/html/index.html
