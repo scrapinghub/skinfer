@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Generates a JSON schema based on samples
+"""
 
 from __future__ import absolute_import, division, print_function
 
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from json_schema_merger import schema_inferer
+from skinfer import schema_inferer
 import json
 
 
@@ -35,8 +37,7 @@ def run(args):
 
 if '__main__' == __name__:
     import argparse
-    parser = argparse.ArgumentParser(
-        description="Generates a JSON schema based on samples")
+    parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument('-o', dest='output',
                         help='Write JSON schema to this file')

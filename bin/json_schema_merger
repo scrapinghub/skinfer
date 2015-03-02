@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+Merges given JSON Schemas, inferring the required properties
+"""
 
 from __future__ import absolute_import, division, print_function
 
@@ -7,7 +10,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from json_schema_merger.json_schema_merger import merge_schema
+from skinfer.json_schema_merger import merge_schema
 import json
 
 
@@ -33,8 +36,7 @@ def run(args):
 
 if '__main__' == __name__:
     import argparse
-    parser = argparse.ArgumentParser(
-        description="Simple JSON Schema Merger Tool")
+    parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument('-o', dest='output',
                         help='Write JSON schema to this file')
