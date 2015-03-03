@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install json_schema_merger
+    $ easy_install skinfer
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv json_schema_merger
-    $ pip install json_schema_merger
+    $ mkvirtualenv skinfer
+    $ pip install skinfer

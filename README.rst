@@ -22,32 +22,77 @@ Features
 
 Use `schema_inferer` to generate a schema from a list of samples::
 
-    $ ./bin/schema_inferer --help
-    usage: schema_inferer [-h] [-o OUTPUT] [--jsonlines] SAMPLE [SAMPLE ...]
-
-    Generates a JSON schema based on samples
-
-    positional arguments:
-      SAMPLE       JSON data sample files
-
-    optional arguments:
-      -h, --help   show this help message and exit
-      -o OUTPUT    Write JSON schema to this file
-      --jsonlines  Assume samples are in JSON lines format
+    $ cat samples.json
+    {"name": "Claudio", "age": 29}
+    {"name": "Roberto", "surname": "Gomez", "age": 72}
+    $ ./bin/schema_inferer --jsonlines samples.json
+    {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "required": [
+            "age",
+            "name"
+        ],
+        "type": "object",
+        "properties": {
+            "age": {
+                "type": "number"
+            },
+            "surname": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            }
+        }
+    }
 
 
 Use `json_schema_merger` to merge a list of JSON schemas into one
 JSON schema that represents the common properties::
 
-    $ ./bin/json_schema_merger --help
-    usage: json_schema_merger [-h] [-o OUTPUT] schemas [schemas ...]
-
-    Merges given JSON Schemas, inferring the required properties
-
-    positional arguments:
-      schemas     List of JSON schema files to merge
-
-      optional arguments:
-        -h, --help  show this help message and exit
-        -o OUTPUT   Write JSON schema to this file
-
+    $ cat schema1.json  # schema requiring name and age properties
+    {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "required": [
+            "age",
+            "name"
+        ],
+        "type": "object",
+        "properties": {
+            "age": {
+                "type": "number"
+            },
+            "name": {
+                "type": "string"
+            }
+        }
+    }
+    $ cat schema2.json  # schema with no age, but requiring name
+    {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "required": [
+            "name"
+        ],
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string"
+            }
+        }
+    }
+    $ ./bin/json_schema_merger schema1.json schema2.json
+    {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "required": [
+            "name"
+        ],
+        "type": "object",
+        "properties": {
+            "age": {
+                "type": "number"
+            },
+            "name": {
+                "type": "string"
+            }
+        }
+    }

@@ -85,17 +85,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/json_schema_merger.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/skinfer.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/json_schema_merger.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/skinfer.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/json_schema_merger"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/json_schema_merger"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/skinfer"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/skinfer"
 	@echo "# devhelp"
 
 epub:
