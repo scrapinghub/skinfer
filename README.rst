@@ -8,7 +8,7 @@ Skinfer - tool for working with JSON schemas
 .. image:: https://travis-ci.org/scrapinghub/skinfer.png?branch=master
         :target: https://travis-ci.org/scrapinghub/skinfer
 
-.. image:: https://pypip.in/d/skinfer.png
+.. image:: https://pypip.in/d/skinfer/badge.png
         :target: https://pypi.python.org/pypi/skinfer
 
 
