@@ -55,7 +55,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'JSON Schema Merger'
+project = u'Skinfer'
 copyright = u'2014, Scrapinghub'
 
 # The version info for the project you're documenting, acts as replacement
@@ -209,7 +209,7 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'skinfer.tex',
-     u'JSON Schema Merger Documentation',
+     u'Skinfer Documentation',
      u'Scrapinghub', 'manual'),
 ]
 
@@ -240,7 +240,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'skinfer',
-     u'JSON Schema Merger Documentation',
+     u'Skinfer Documentation',
      [u'Scrapinghub'], 1)
 ]
 
@@ -255,7 +255,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'skinfer',
-     u'JSON Schema Merger Documentation',
+     u'Skinfer Documentation',
      u'Scrapinghub',
      'skinfer',
      'One line description of project.',
