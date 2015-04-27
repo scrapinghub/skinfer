@@ -74,15 +74,29 @@ def merge_nulls(first, second):
 
 
 def merge_arrays(first, second):
+    def is_schema_tuple(item):
+        return isinstance(item, list)
+
     def are_json_schema_tuples(first_items, second_items):
         return all([
-            isinstance(first_items, list),
-            isinstance(second_items, list),
+            is_schema_tuple(first_items),
+            is_schema_tuple(second_items),
             len(first_items) == len(second_items)
         ])
 
     def merge_tuples(first_items, second_items):
         return [_merge_schema(e1, e2) for e1, e2 in zip(first_items, second_items)]
+
+    def merge_array_list_with_array_tuple(first_items, second_items):
+        tuple_items, merged = first_items, second_items
+
+        if is_schema_tuple(merged):
+            tuple_items, merged = merged, tuple_items
+
+        for schema in tuple_items:
+            merged = _merge_schema(merged, schema)
+
+        return merged
 
     def merge_items(first_items, second_items):
         if not (first_items and second_items):
@@ -90,6 +104,9 @@ def merge_arrays(first, second):
 
         if are_json_schema_tuples(first_items, second_items):
             return merge_tuples(first_items, second_items)
+
+        if is_schema_tuple(first_items) or is_schema_tuple(second_items):
+            return merge_array_list_with_array_tuple(first_items, second_items)
 
         return _merge_schema(first_items, second_items)
 

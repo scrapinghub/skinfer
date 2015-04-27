@@ -146,3 +146,15 @@ REQUIRING_AN_ARRAY_PROPERTY_WITH_TUPLE_VALIDATION = {
         },
     }
 }
+
+REQUIRING_AN_ARRAY_PROPERTY_CONFLICTING_WITH_TUPLE = {
+    '$schema': u'http://json-schema.org/draft-04/schema',
+    "type": "object",
+    "required": ["array_with_tuple"],
+    "properties": {
+        "array_with_tuple": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+    }
+}
