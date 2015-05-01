@@ -39,7 +39,7 @@ def run(args):
         schema = try_infer_schema(args)
         write_schema(schema, args.output)
     except ValueError as e:
-        if 'Extra data: line' in e.message:
+        if 'Extra data:' in e.message:
             args.jsonlines = True
             schema = try_infer_schema(args)
             write_schema(schema, args.output)

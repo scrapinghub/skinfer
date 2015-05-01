@@ -18,13 +18,43 @@ class TestJsonSchemaInferer(unittest.TestCase):
         self.assertTrue(type(schema) == dict)
 
 
-class TestSchemaInfererScriptTest(unittest.TestCase):
+def check_output(*popenargs, **kwargs):
+    r"""Run command with arguments and return its output as a byte string.
+
+    Backported from Python 2.7 as it's implemented as pure python on stdlib.
+
+    >>> check_output(['/usr/bin/python', '--version'])
+    Python 2.6.2
+    """
+    # FROM: https://gist.github.com/edufelipe/1027906
+    process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
+    output, unused_err = process.communicate()
+    retcode = process.poll()
+    if retcode:
+        cmd = kwargs.get("args")
+        if cmd is None:
+            cmd = popenargs[0]
+        error = subprocess.CalledProcessError(retcode, cmd)
+        error.output = output
+        raise error
+    return output
+
+
+class TestCasePython26Shim(unittest.TestCase):
+    def assertIsNotNone(self, value):
+        self.assertFalse(value is None, "%r is not None" % value)
+
+    def assertIn(self, value, seq):
+        self.assertTrue(value in seq, "%r is not in %r" % (value, seq))
+
+
+class TestSchemaInfererScriptTest(TestCasePython26Shim):
     def test_run_with_json_samples_in_separate_files(self):
         # given:
         sample1 = fixtures.get_sample_path('minimal-1.json')
         sample2 = fixtures.get_sample_path('sample2-yelp.json')
         # when:
-        output = subprocess.check_output(['bin/schema_inferer', sample1, sample2])
+        output = check_output(['bin/schema_inferer', sample1, sample2])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)
@@ -35,7 +65,7 @@ class TestSchemaInfererScriptTest(unittest.TestCase):
         # given:
         infile = fixtures.get_sample_path('jsonlines.jsonl')
         # when:
-        output = subprocess.check_output(['bin/schema_inferer', '--jsonlines', infile])
+        output = check_output(['bin/schema_inferer', '--jsonlines', infile])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)
@@ -46,7 +76,7 @@ class TestSchemaInfererScriptTest(unittest.TestCase):
         # given:
         infile = fixtures.get_sample_path('jsonlines.jsonl')
         # when:
-        output = subprocess.check_output(['bin/schema_inferer', infile])
+        output = check_output(['bin/schema_inferer', infile])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)
