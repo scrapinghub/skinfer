@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 import itertools
+import sys
 
 
 def merge_property_list(first_properties, second_properties):
@@ -25,6 +26,8 @@ def get_reserved_keys(schema_type):
         return set(['type', 'properties', 'required'])
     if schema_type == 'array':
         return set(['type', 'items'])
+    if schema_type == 'string':
+        return set(['type', 'minLength', 'maxLength'])
     else:
         raise NotImplementedError(
             "Missing implementation for schema type: %s" % schema_type)
@@ -56,9 +59,30 @@ def merge_objects(first, second):
     return result
 
 
+def min_or_none(val1, val2):
+    """Returns min(val1, val2) returning None only if both values are None"""
+    return min(val1, val2, key=lambda x: sys.maxint if x is None else x)
+
+
+def max_or_none(val1, val2):
+    """Returns max(val1, val2) returning None only if both values are None"""
+    return max(val1, val2, key=lambda x: -sys.maxint if x is None else x)
+
+
 def merge_strings(first, second):
-    # TODO: add support for schemas more complex than {"type": "string"}
-    return second
+    result = {'type': 'string'}
+
+    result.update(copy_nonreserved_keys(first, second))
+
+    minLength = min_or_none(first.get('minLength'), second.get('minLength'))
+    if minLength:
+        result['minLength'] = minLength
+
+    maxLength = max_or_none(first.get('maxLength'), second.get('maxLength'))
+    if maxLength:
+        result['maxLength'] = maxLength
+
+    return result
 
 
 def merge_numbers(first, second):

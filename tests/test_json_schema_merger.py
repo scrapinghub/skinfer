@@ -266,3 +266,103 @@ class TestJsonSchemaMerger(unittest.TestCase):
                 }
             }
         )
+
+    def test_merge_string_keeping_custom_props(self):
+        self.check_merge_result(
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "default": "botemo"},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "description": "Something"},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "description": "Something", "default": "botemo"},
+                }
+            }
+        )
+
+    def test_merge_string_minlength_nolength(self):
+        self.check_merge_result(
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string"},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2},
+                }
+            },
+        )
+
+    def test_merge_string_maxlength_nolength(self):
+        self.check_merge_result(
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "maxLength": 22},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2, "maxLength": 22},
+                }
+            },
+        )
+
+    def test_merge_string_minlength_maxlength(self):
+        self.check_merge_result(
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2, "maxLength": 10},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 4, "maxLength": 12},
+                }
+            },
+            {
+                '$schema': u'http://json-schema.org/draft-04/schema',
+                "type": "object",
+                "properties": {
+                    "something": {"type": "string", "minLength": 2, "maxLength": 12},
+                }
+            }
+        )
