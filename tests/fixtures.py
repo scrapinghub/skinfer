@@ -7,8 +7,12 @@ TEST_DIR = os.path.dirname(__file__)
 SAMPLES_DIR = os.path.join(TEST_DIR, 'samples')
 
 
+def get_sample_path(sample_filename):
+    return os.path.join(SAMPLES_DIR, sample_filename)
+
+
 def get_sample(sample_filename):
-    with open(os.path.join(SAMPLES_DIR, sample_filename)) as f:
+    with open(get_sample_path(sample_filename)) as f:
         return json.load(f)
 
 

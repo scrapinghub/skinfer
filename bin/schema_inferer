@@ -12,27 +12,39 @@ from skinfer import schema_inferer
 import json
 
 
-def get_samples(args):
-    if args.jsonlines:
-        return schema_inferer.load_samples_from_jsonlines(args.samples)
+def get_samples(samples, jsonlines=False):
+    if jsonlines:
+        return schema_inferer.load_samples_from_jsonlines(samples)
 
-    return schema_inferer.load_samples_from_json(args.samples)
+    return schema_inferer.load_samples_from_json(samples)
+
+
+def write_schema(schema, outputfile=None):
+    result = json.dumps(schema, indent=4)
+
+    if outputfile:
+        with open(outputfile, 'w') as fp:
+            fp.write(fp)
+    else:
+        print(result)
+
+
+def try_infer_schema(args):
+    samples = get_samples(args.samples, args.jsonlines)
+    return schema_inferer.generate_and_merge_schemas(samples)
 
 
 def run(args):
     try:
-        merged = schema_inferer.generate_and_merge_schemas(get_samples(args))
-
-        if args.output:
-            with open(args.output, 'w') as f:
-                json.dump(merged, f, indent=4)
-        else:
-            print(json.dumps(merged, indent=4))
+        schema = try_infer_schema(args)
+        write_schema(schema, args.output)
     except ValueError as e:
         if 'Extra data: line' in e.message:
-            print("\nInvalid output: maybe you're missing --jsonlines option?\n"
-                  "NOTE: the --jsonlines option must appear before the samples arg\n")
-        raise
+            args.jsonlines = True
+            schema = try_infer_schema(args)
+            write_schema(schema, args.output)
+        else:
+            raise
 
 
 if '__main__' == __name__:
