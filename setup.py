@@ -13,12 +13,12 @@ requirements = [
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    # put package test requirements here
 ]
 
 setup(
     name='skinfer',
-    version='0.1.0',
+    version='0.1.1',
     description='Simple tool to merge JSON schemas',
     long_description=readme + '\n\n' + history,
     author='Scrapinghub',
