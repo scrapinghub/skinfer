@@ -6,9 +6,22 @@ from skinfer.draft4_generator import IncompleteDraft4SchemaGenerator
 from skinfer.json_schema_merger import merge_schema
 
 
+class GzipFileShim(gzip.GzipFile):
+    """Python 2.6 Shim
+    See https://mail.python.org/pipermail/tutor/2009-November/072959.html
+    """
+    def __enter__(self):
+        if self.fileobj is None:
+            raise ValueError("I/O operation on closed GzipFile object")
+        return self
+
+    def __exit__(self, *args):
+        self.close()
+
+
 def gzopen(filename):
     if '.gz' in filename:
-        return gzip.open(filename)
+        return GzipFileShim(filename)
 
     return open(filename)
 

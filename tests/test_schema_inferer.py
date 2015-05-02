@@ -17,6 +17,27 @@ class TestJsonSchemaInferer(unittest.TestCase):
         schema = schema_inferer.generate_and_merge_schemas([sample1, sample2])
         self.assertTrue(type(schema) == dict)
 
+    def test_load_json_samples(self):
+        # given:
+        sample1 = fixtures.get_sample_path('sample1-yelp.json')
+        sample2 = fixtures.get_sample_path('sample2-yelp.json')
+
+        # when:
+        samples = list(schema_inferer.load_samples_from_json([sample1, sample2]))
+
+        # then:
+        self.assertEquals(2, len(samples))
+
+    def test_load_jsonlines_samples(self):
+        # given:
+        infile = fixtures.get_sample_path('jsonlines.jsonl.gz')
+
+        # when:
+        samples = list(schema_inferer.load_samples_from_jsonlines([infile]))
+
+        # then:
+        self.assertEquals(3, len(samples))
+
 
 def check_output(*popenargs, **kwargs):
     r"""Run command with arguments and return its output as a byte string.
