@@ -22,15 +22,12 @@ def merge_property_list(first_properties, second_properties):
 
 
 def get_reserved_keys(schema_type):
-    if schema_type == 'object':
-        return set(['type', 'properties', 'required'])
-    if schema_type == 'array':
-        return set(['type', 'items'])
-    if schema_type == 'string':
-        return set(['type', 'minLength', 'maxLength'])
-    else:
-        raise NotImplementedError(
-            "Missing implementation for schema type: %s" % schema_type)
+    if (schema_type not in SCHEMA_TYPES or
+            'reserved_keys' not in SCHEMA_TYPES[schema_type]):
+        mesg = "Missing implementation for schema type: %s" % schema_type
+        raise NotImplementedError(mesg)
+
+    return SCHEMA_TYPES[schema_type]['reserved_keys']
 
 
 def copy_nonreserved_keys(first, second):
@@ -169,20 +166,11 @@ def _merge_schema(first, second):
 
     schema_type = first.get('type')
 
-    if schema_type == 'object':
-        return merge_objects(first, second)
-    elif schema_type == 'string':
-        return merge_strings(first, second)
-    elif schema_type == 'array':
-        return merge_arrays(first, second)
-    elif schema_type == 'number':
-        return merge_numbers(first, second)
-    elif schema_type == 'boolean':
-        return merge_booleans(first, second)
-    elif schema_type == 'null':
-        return merge_nulls(first, second)
-    else:
+    if schema_type not in SCHEMA_TYPES:
         raise NotImplementedError("Type %s is not yet supported" % schema_type)
+
+    merge_function = SCHEMA_TYPES[schema_type]['merge_function']
+    return merge_function(first, second)
 
 
 def merge_schema(first, second):
@@ -193,3 +181,28 @@ def merge_schema(first, second):
         raise NotImplementedError("Unsupported root type")
 
     return merge_objects(first, second)
+
+
+SCHEMA_TYPES = {
+    'object': {
+        'merge_function': merge_objects,
+        'reserved_keys': set(['type', 'properties', 'required']),
+    },
+    'string': {
+        'merge_function': merge_strings,
+        'reserved_keys': set(['type', 'minLength', 'maxLength']),
+    },
+    'array': {
+        'merge_function': merge_arrays,
+        'reserved_keys': set(['type', 'items']),
+    },
+    'number': {
+        'merge_function': merge_numbers,
+    },
+    'boolean': {
+        'merge_function': merge_booleans,
+    },
+    'null': {
+        'merge_function': merge_nulls,
+    },
+}
