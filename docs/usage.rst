@@ -22,19 +22,26 @@ Use the `schema_inferer` script to generate a schema from a list of samples::
       --jsonlines  Assume samples are in JSON lines format
 
 
-You can also do schema inference programatically::
+You can also infer the schema programatically::
 
-    >>> import json
+    >>> import skinfer, json
     >>> sample1 = {'name': 'Claudio'}
     >>> sample2 = {'name': 'Roberto', 'surname': 'Salazar'}
-    >>> from skinfer.schema_inferer import generate_and_merge_schemas
-    >>> schema = generate_and_merge_schemas([sample1, sample2])
+    >>> schema = skinfer.infer_schema([sample1, sample2])
     >>> import pprint
     >>> pprint.pprint(schema)
     {'$schema': u'http://json-schema.org/draft-04/schema',
      u'properties': {'name': {'type': 'string'}, 'surname': {'type': 'string'}},
      u'required': ['name'],
      u'type': u'object'}
+
+Using the API, you can also generate a schema for only one sample::
+
+    >>> skinfer.generate_schema({"name": "Claudio", "surname": "Salazar"})
+    {'$schema': u'http://json-schema.org/draft-04/schema',
+     'properties': {'name': {'type': 'string'}, 'surname': {'type': 'string'}},
+     'required': ['surname', 'name'],
+     'type': 'object'}
 
 
 Merging existing JSON Schemas
@@ -56,14 +63,13 @@ JSON schema that represents the common properties::
         -o OUTPUT   Write JSON schema to this file
 
 
-You can also use the schema merging programatically::
+You can also merge the schema programatically::
 
 
+    >>> import skinfer
     >>> any_object = {'type': 'object'}
     >>> requires_name = {'type': 'object', 'required': ['name'], 'properties': {'name': {'type': 'string'}}}
-    >>> from skinfer.json_schema_merger import merge_schema
-    >>> merged_schema = merge_schema(any_object, requires_name)
+    >>> merged_schema = skinfer.merge_schema(any_object, requires_name)
     >>> import pprint
     >>> pprint.pprint(merged_schema)
     {u'properties': {'name': {'type': 'string'}}, u'type': u'object'}
-

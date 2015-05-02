@@ -20,12 +20,18 @@ Simple tool to infer and/or merge JSON schemas
 Features
 --------
 
-Use `schema_inferer` to generate a schema from a list of samples::
+* Generating schema in **JSON Schema draft 4** format
+* Inferring schema from multiple samples
+* Merging schemas - nice for generating schema in Map-Reduce fashion
+  or updating an old schema with new data
 
-    $ cat samples.json
+
+Example of using `schema_inferer` to generate a schema from a list of samples::
+
+    $ cat samples.jsonl
     {"name": "Claudio", "age": 29}
     {"name": "Roberto", "surname": "Gomez", "age": 72}
-    $ ./bin/schema_inferer --jsonlines samples.json
+    $ ./bin/schema_inferer --jsonlines samples.jsonl
     {
         "$schema": "http://json-schema.org/draft-04/schema",
         "required": [
@@ -47,52 +53,10 @@ Use `schema_inferer` to generate a schema from a list of samples::
     }
 
 
-Use `json_schema_merger` to merge a list of JSON schemas into one
-JSON schema that represents the common properties::
+Install with::
 
-    $ cat schema1.json  # schema requiring name and age properties
-    {
-        "$schema": "http://json-schema.org/draft-04/schema",
-        "required": [
-            "age",
-            "name"
-        ],
-        "type": "object",
-        "properties": {
-            "age": {
-                "type": "number"
-            },
-            "name": {
-                "type": "string"
-            }
-        }
-    }
-    $ cat schema2.json  # schema with no age, but requiring name
-    {
-        "$schema": "http://json-schema.org/draft-04/schema",
-        "required": [
-            "name"
-        ],
-        "type": "object",
-        "properties": {
-            "name": {
-                "type": "string"
-            }
-        }
-    }
-    $ ./bin/json_schema_merger schema1.json schema2.json
-    {
-        "$schema": "http://json-schema.org/draft-04/schema",
-        "required": [
-            "name"
-        ],
-        "type": "object",
-        "properties": {
-            "age": {
-                "type": "number"
-            },
-            "name": {
-                "type": "string"
-            }
-        }
-    }
+    $ pip install skinfer
+
+Or, if you don't have ``pip``, you can still install it with::
+
+    $ easy_install skinfer
