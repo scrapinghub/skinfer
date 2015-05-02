@@ -40,10 +40,16 @@ def load_samples_from_json(file_list):
 
 
 def generate_schema_for_sample(sample):
+    """Returns a schema generated for the given sample.
+    """
     return IncompleteDraft4SchemaGenerator(sample).to_dict()
 
 
 def generate_and_merge_schemas(samples):
+    """Iterates through the given samples, generating schemas
+    and merging them, returning the resulting merged schema.
+
+    """
     merged = generate_schema_for_sample(next(iter(samples)))
 
     for sample in samples:

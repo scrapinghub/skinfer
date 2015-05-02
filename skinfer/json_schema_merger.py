@@ -174,6 +174,8 @@ def _merge_schema(first, second):
 
 
 def merge_schema(first, second):
+    """Returns the result of merging the two given schemas.
+    """
     if not (type(first) == type(second) == dict):
         raise ValueError("Argument is not a schema")
 
