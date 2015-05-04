@@ -19,14 +19,8 @@ def get_samples(samples, jsonlines=False):
     return schema_inferer.load_samples_from_json(samples)
 
 
-def write_schema(schema, outputfile=None):
-    result = json.dumps(schema, indent=4)
-
-    if outputfile:
-        with open(outputfile, 'w') as fp:
-            fp.write(fp)
-    else:
-        print(result)
+def write_schema(schema):
+    print(json.dumps(schema, indent=4))
 
 
 def try_infer_schema(args):
@@ -37,12 +31,12 @@ def try_infer_schema(args):
 def run(args):
     try:
         schema = try_infer_schema(args)
-        write_schema(schema, args.output)
+        write_schema(schema)
     except ValueError as e:
         if 'Extra data:' in e.message:
             args.jsonlines = True
             schema = try_infer_schema(args)
-            write_schema(schema, args.output)
+            write_schema(schema)
         else:
             raise
 
@@ -51,8 +45,6 @@ if '__main__' == __name__:
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
 
-    parser.add_argument('-o', dest='output',
-                        help='Write JSON schema to this file')
     parser.add_argument('--jsonlines', action='store_true',
                         help='Assume samples are in JSON lines format')
     parser.add_argument('samples', nargs='+', metavar='SAMPLE',
