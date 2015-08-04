@@ -3,6 +3,13 @@
 History
 -------
 
+0.1.2 (2015-08-04)
+------------------
+
+* Bugfix: removed buggy -o argument
+* Automated PyPI release via Travis
+
+
 0.1.1 (2015-05-01)
 ------------------
 
