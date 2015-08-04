@@ -1,14 +1,16 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
-
 python:
-  - "2.7"
-  - "2.6"
-  - "pypy"
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- '2.7'
+- '2.6'
+- pypy
 install: pip install -r requirements.txt
-
-# command to run tests, e.g. python setup.py test
 script: python setup.py test
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: eljunior
+  password:
+    secure: QqknrtagKtsIjvniww4APNjnvolWG6FSmY9ql3OOwKfeW8XA6QQdI/waCBx/TiDkKFBDlC/TYIDJVtsks8kSZQ5i42zJ1MpQtSQx0dqA8vrRQxHh44RoUGaIHB4YvKs1UXH2e2O5coMkhXdU+MHn+GRAvuw9B+v4zoP+NGp4uec=
+  on:
+    tags: true
+    repo: scrapinghub/skinfer
