@@ -18,7 +18,7 @@ test_requirements = [
 
 setup(
     name='skinfer',
-    version='0.1.1',
+    version='0.1.2',
     description='Simple tool to merge JSON schemas',
     long_description=readme + '\n\n' + history,
     author='Scrapinghub',
