@@ -3,13 +3,10 @@
 """Generates a JSON schema based on samples
 """
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, print_function
 
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from skinfer import schema_inferer
 import json
+from skinfer import schema_inferer
 
 
 def get_samples(samples, jsonlines=False):
