@@ -32,6 +32,6 @@ __email__ = 'info@scrapinghub.com'
 __version__ = '0.1.2'
 
 
-from .json_schema_merger import merge_schema  # NOQA
+from .schema_merger import merge_schema  # NOQA
 from .schema_inferer import generate_schema_for_sample as generate_schema  # NOQA
 from .schema_inferer import generate_and_merge_schemas as infer_schema  # NOQA

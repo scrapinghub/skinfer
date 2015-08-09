@@ -2,8 +2,8 @@ from __future__ import absolute_import, print_function
 
 import json
 import gzip
-from skinfer.draft4_generator import JsonSchemaGenerator
-from skinfer.json_schema_merger import merge_schema
+from skinfer.schema_generator import JsonSchemaGenerator
+from skinfer.schema_merger import merge_schema
 
 
 def gzopen(filename):
