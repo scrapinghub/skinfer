@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, print_function
 import unittest
 import json
 from tests import fixtures
 from skinfer import schema_inferer
-import subprocess
+from subprocess import check_output
 
 
 class TestJsonSchemaInferer(unittest.TestCase):
@@ -37,28 +37,6 @@ class TestJsonSchemaInferer(unittest.TestCase):
 
         # then:
         self.assertEquals(3, len(samples))
-
-
-def check_output(*popenargs, **kwargs):
-    r"""Run command with arguments and return its output as a byte string.
-
-    Backported from Python 2.7 as it's implemented as pure python on stdlib.
-
-    >>> check_output(['/usr/bin/python', '--version'])
-    Python 2.6.2
-    """
-    # FROM: https://gist.github.com/edufelipe/1027906
-    process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
-    output, unused_err = process.communicate()
-    retcode = process.poll()
-    if retcode:
-        cmd = kwargs.get("args")
-        if cmd is None:
-            cmd = popenargs[0]
-        error = subprocess.CalledProcessError(retcode, cmd)
-        error.output = output
-        raise error
-    return output
 
 
 class TestCasePython26Shim(unittest.TestCase):

@@ -23,10 +23,6 @@ class TestDraft4SchemaGenerator(unittest.TestCase):
         self.assertEqual(generate_schema({"something": {"nested_required": "1"}}),
                          fixtures.REQUIRING_SOME_PROPERTY_WITH_NESTED_REQUIRED_PROPERTY)
 
-    def assertIn(self, a, b):
-        """polyfill for python 2.6"""
-        self.assertTrue(a in b, "%r not found in %r" % (a, b))
-
     def assertSchemaEqual(self, schema1, schema2):
         self.assertEqual(len(schema1), len(schema2))
         self.assertEqual(schema1.get('type'), schema2.get('type'))

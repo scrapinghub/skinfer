@@ -8,13 +8,6 @@ from setuptools import setup
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-requirements = [
-    'json-schema-generator >= 0.3'
-]
-
-test_requirements = [
-    # put package test requirements here
-]
 
 setup(
     name='skinfer',
@@ -34,7 +27,9 @@ setup(
         'bin/json_schema_merger',
     ],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[
+        'json-schema-generator >= 0.3'
+    ],
     license="BSD",
     zip_safe=False,
     keywords='skinfer json-schema json schema inferer merger',
@@ -44,12 +39,10 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
     test_suite='tests',
-    tests_require=test_requirements
 )
