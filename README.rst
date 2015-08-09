@@ -26,12 +26,12 @@ Features
   or updating an old schema with new data
 
 
-Example of using `schema_inferer` to generate a schema from a list of samples::
+Example of using `skinfer` to generate a schema from a list of samples::
 
     $ cat samples.jsonl
     {"name": "Claudio", "age": 29}
     {"name": "Roberto", "surname": "Gomez", "age": 72}
-    $ ./bin/schema_inferer --jsonlines samples.jsonl
+    $ skinfer --jsonlines samples.jsonl
     {
         "$schema": "http://json-schema.org/draft-04/schema",
         "required": [

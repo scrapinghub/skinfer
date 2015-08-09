@@ -23,12 +23,13 @@ setup(
     package_dir={'skinfer':
                  'skinfer'},
     scripts=[
-        'bin/schema_inferer',
-        'bin/json_schema_merger',
+        'bin/skinfer',
+        'bin/schema_merger',
     ],
     include_package_data=True,
     install_requires=[
-        'json-schema-generator >= 0.3'
+        'jsonschema=>0.8.0',
+        'json-schema-generator >= 0.3',
     ],
     license="BSD",
     zip_safe=False,
