@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function
 
 import json
 import gzip
-from skinfer.draft4_generator import IncompleteDraft4SchemaGenerator
+from skinfer.draft4_generator import JsonSchemaGenerator
 from skinfer.json_schema_merger import merge_schema
 
 
@@ -29,7 +29,7 @@ def load_samples_from_json(file_list):
 def generate_schema_for_sample(sample):
     """Returns a schema generated for the given sample.
     """
-    return IncompleteDraft4SchemaGenerator(sample).to_dict()
+    return JsonSchemaGenerator(sample).generate()
 
 
 def generate_and_merge_schemas(samples):

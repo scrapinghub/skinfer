@@ -22,6 +22,10 @@ class IncompleteDraft4SchemaGenerator(json_schema_generator.SchemaGenerator):
 
     We should implement a full Draft4SchemaGenerator -- probably upstream.
     """
+
+    def generate(self):
+        return self.to_dict()
+
     def to_dict(self, base_object=None, object_id=None, first_level=True):
         schema_dict = {}
 
@@ -55,3 +59,5 @@ class IncompleteDraft4SchemaGenerator(json_schema_generator.SchemaGenerator):
                     schema_dict['items'].append(self.to_dict(item, idx, False))
 
         return schema_dict
+
+JsonSchemaGenerator = IncompleteDraft4SchemaGenerator

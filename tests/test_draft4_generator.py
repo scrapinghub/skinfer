@@ -2,18 +2,30 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, division, print_function
-from skinfer.draft4_generator import IncompleteDraft4SchemaGenerator
+from skinfer.draft4_generator import JsonSchemaGenerator
 import unittest
 from tests import fixtures
 
 
 def generate_schema(sample):
-    return IncompleteDraft4SchemaGenerator(sample).to_dict()
+    return JsonSchemaGenerator(sample).generate()
 
 
-class TestDraft4SchemaGenerator(unittest.TestCase):
+class TestJsonSchemaGenerator(unittest.TestCase):
     def test_empty_object(self):
         self.assertEqual(generate_schema({}), fixtures.REQUIRE_OBJECT_TYPE)
+
+    def test_string(self):
+        expected = {'$schema': u'http://json-schema.org/draft-04/schema', 'type': 'string'}
+        self.assertEqual(generate_schema(''), expected)
+
+    def test_list(self):
+        expected = {'$schema': u'http://json-schema.org/draft-04/schema', 'type': 'array'}
+        self.assertEqual(generate_schema([]), expected)
+
+    def test_list_with_items(self):
+        expected = {'$schema': u'http://json-schema.org/draft-04/schema', 'type': 'array', 'items': {'type': 'number'}}
+        self.assertEqual(generate_schema([1, 2, 3]), expected)
 
     def test_simple_object(self):
         self.assertEqual(generate_schema({"something": "ai"}),
