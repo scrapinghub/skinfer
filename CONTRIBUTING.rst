@@ -108,4 +108,4 @@ Tips
 
 To run a subset of tests::
 
-    $ python -m unittest tests.test_draft4_generator
+    $ tox tests/test_schema_inferer.py

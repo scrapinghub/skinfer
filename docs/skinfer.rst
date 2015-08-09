@@ -4,18 +4,18 @@ skinfer package
 Submodules
 ----------
 
-skinfer.draft4_generator module
--------------------------------
+skinfer.old_schema_generator module
+-----------------------------------
 
-.. automodule:: skinfer.draft4_generator
+.. automodule:: skinfer.old_schema_generator
     :members:
     :undoc-members:
     :show-inheritance:
 
-skinfer.json_schema_merger module
----------------------------------
+skinfer.schema_generator module
+-------------------------------
 
-.. automodule:: skinfer.json_schema_merger
+.. automodule:: skinfer.schema_generator
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,6 +24,14 @@ skinfer.schema_inferer module
 -----------------------------
 
 .. automodule:: skinfer.schema_inferer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+skinfer.schema_merger module
+----------------------------
+
+.. automodule:: skinfer.schema_merger
     :members:
     :undoc-members:
     :show-inheritance:
