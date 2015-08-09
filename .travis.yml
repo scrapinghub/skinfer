@@ -1,10 +1,11 @@
 language: python
-python:
-- '2.7'
-- '2.6'
-- pypy
-install: pip install -r requirements.txt
-script: python setup.py test
+python: 2.7
+env:
+- TOXENV=py27
+- TOXENV=pypy
+install:
+- pip install tox
+script: tox
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
@@ -14,3 +15,4 @@ deploy:
   on:
     tags: true
     repo: scrapinghub/skinfer
+    condition: $TOXENV == py27
