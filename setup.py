@@ -28,7 +28,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'jsonschema=>0.8.0',
+        'jsonschema >= 0.8.0',
         'json-schema-generator >= 0.3',
     ],
     license="BSD",
