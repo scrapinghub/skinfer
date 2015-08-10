@@ -58,12 +58,12 @@ def merge_objects(first, second):
 
 def min_or_none(val1, val2):
     """Returns min(val1, val2) returning None only if both values are None"""
-    return min(val1, val2, key=lambda x: sys.maxint if x is None else x)
+    return min(val1, val2, key=lambda x: sys.maxsize if x is None else x)
 
 
 def max_or_none(val1, val2):
     """Returns max(val1, val2) returning None only if both values are None"""
-    return max(val1, val2, key=lambda x: -sys.maxint if x is None else x)
+    return max(val1, val2, key=lambda x: -sys.maxsize if x is None else x)
 
 
 def merge_strings(first, second):

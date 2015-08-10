@@ -1,8 +1,22 @@
 import json
+import sys
+import tempfile
 import unittest
 from subprocess import check_output
-import tempfile
-import fixtures
+from tests import fixtures
+
+
+FALLBACK_ENCODING = 'utf-8'
+STDOUT_ENCODING = sys.stdout.encoding or FALLBACK_ENCODING
+
+
+def run(cmdline):
+    '''
+    Run a cmdline spec and return its decoded output
+    :param cmdline:
+    :return: decoded output
+    '''
+    return check_output(cmdline).decode(STDOUT_ENCODING)
 
 
 class SkinferScriptTest(unittest.TestCase):
@@ -27,7 +41,7 @@ class SkinferScriptTest(unittest.TestCase):
         }
 
         # when:
-        output = check_output([self.script, filename])
+        output = run([self.script, filename])
         # then:
         self.assertEqual(expected, json.loads(output))
 
@@ -36,7 +50,7 @@ class SkinferScriptTest(unittest.TestCase):
         sample1 = fixtures.get_sample_path('minimal-1.json')
         sample2 = fixtures.get_sample_path('sample2-yelp.json')
         # when:
-        output = check_output([self.script, sample1, sample2])
+        output = run([self.script, sample1, sample2])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)
@@ -47,7 +61,7 @@ class SkinferScriptTest(unittest.TestCase):
         # given:
         infile = fixtures.get_sample_path('jsonlines.jsonl')
         # when:
-        output = check_output([self.script, '--jsonlines', infile])
+        output = run([self.script, '--jsonlines', infile])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)
@@ -58,7 +72,7 @@ class SkinferScriptTest(unittest.TestCase):
         # given:
         infile = fixtures.get_sample_path('jsonlines.jsonl')
         # when:
-        output = check_output([self.script, infile])
+        output = run([self.script, infile])
         # then:
         data = json.loads(output)
         self.assertIsNotNone(data)

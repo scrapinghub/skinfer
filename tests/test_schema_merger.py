@@ -4,6 +4,7 @@
 from __future__ import absolute_import, print_function
 from skinfer.schema_merger import merge_schema
 import unittest
+import six
 from tests import fixtures
 
 
@@ -13,7 +14,7 @@ def recursive_sort(obj):
     """
 
     if isinstance(obj, dict):
-        for key, val in obj.iteritems():
+        for key, val in six.iteritems(obj):
             obj[key] = recursive_sort(val)
         _sorted = obj
 
@@ -21,7 +22,7 @@ def recursive_sort(obj):
         new_list = []
         for val in obj:
             new_list.append(recursive_sort(val))
-        _sorted = sorted(new_list)
+        _sorted = sorted(new_list, key=lambda x: tuple(x.items()) if isinstance(x, dict) else x)
 
     else:
         _sorted = obj
