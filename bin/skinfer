@@ -17,7 +17,7 @@ def get_samples(samples, jsonlines=False):
 
 
 def write_schema(schema):
-    print(json.dumps(schema, indent=4))
+    print(json.dumps(schema, indent=4, sort_keys=True))
 
 
 def try_infer_schema(args):
