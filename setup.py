@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'jsonschema >= 0.8.0',
         'json-schema-generator >= 0.3',
+        'six >= 1.9.0',
     ],
     license="BSD",
     zip_safe=False,
