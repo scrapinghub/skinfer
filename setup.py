@@ -12,7 +12,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 setup(
     name='skinfer',
     version='0.1.2',
-    description='Simple tool to merge JSON schemas',
+    description='A tool for inferring and merging JSON schemas',
     long_description=readme + '\n\n' + history,
     author='Scrapinghub',
     author_email='info@scrapinghub.com',
@@ -29,7 +29,6 @@ setup(
     include_package_data=True,
     install_requires=[
         'jsonschema >= 0.8.0',
-        'json-schema-generator >= 0.3',
         'six >= 1.9.0',
     ],
     license="BSD",

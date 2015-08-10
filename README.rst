@@ -12,7 +12,7 @@ Skinfer - tool for working with JSON schemas
         :target: https://pypi.python.org/pypi/skinfer
 
 
-Simple tool to infer and/or merge JSON schemas
+Skinfer is a tool for inferring and merging JSON schemas
 
 * Free software: BSD license
 * Documentation: https://skinfer.readthedocs.org.
