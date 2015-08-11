@@ -68,6 +68,17 @@ class SkinferScriptTest(unittest.TestCase):
         self.assertIn('required', data)
         self.assertIn('properties', data)
 
+    def test_run_with_gzipped_jsonlines(self):
+        # given:
+        infile = fixtures.get_sample_path('jsonlines.jsonl.gz')
+        # when:
+        output = run([self.script, '--jsonlines', infile])
+        # then:
+        data = json.loads(output)
+        self.assertIsNotNone(data)
+        self.assertIn('required', data)
+        self.assertIn('properties', data)
+
     def test_run_with_jsonlines_samples_omitting_option(self):
         # given:
         infile = fixtures.get_sample_path('jsonlines.jsonl')

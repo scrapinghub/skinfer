@@ -2,24 +2,23 @@ from __future__ import absolute_import, print_function
 
 import json
 import gzip
-import six
 from skinfer.schema_generator import JsonSchemaGenerator
 from skinfer.schema_merger import merge_schema
 
 
 def gzopen(filename):
-    if '.gz' in filename:
-        return gzip.GzipFile(filename)
+    """Opens file for reading as text, optionally gzipped
+    """
+    if filename.endswith('.gz'):
+        return gzip.open(filename, 'rt')
 
-    return open(filename)
+    return open(filename, 'rt')
 
 
 def load_samples_from_jsonlines(file_list):
     for filename in file_list:
         with gzopen(filename) as f:
             for line in f:
-                if isinstance(line, six.binary_type):
-                    line = line.decode('utf-8')
                 yield json.loads(line)
 
 
