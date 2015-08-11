@@ -4,7 +4,7 @@ env:
 - TOXENV=py27
 - TOXENV=pypy
 install:
-- pip install tox
+- pip install -U tox twine wheel
 script: tox
 deploy:
   provider: pypi
