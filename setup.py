@@ -25,6 +25,7 @@ setup(
     scripts=[
         'bin/skinfer',
         'bin/schema_merger',
+        'bin/json_validator'
     ],
     include_package_data=True,
     install_requires=[

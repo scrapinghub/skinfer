@@ -26,6 +26,13 @@ def load_samples_from_json(file_list):
             yield json.load(f)
 
 
+def load_samples(samples, jsonlines=False):
+    if jsonlines:
+        return load_samples_from_jsonlines(samples)
+
+    return load_samples_from_json(samples)
+
+
 def generate_schema_for_sample(sample):
     """Returns a schema generated for the given sample.
     """

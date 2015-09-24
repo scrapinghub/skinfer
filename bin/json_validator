@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+# coding=utf-8
+"""Validates a json file against a given json schema
+"""
+
+
+import argparse
+import json
+
+from jsonschema import validate, Draft4Validator, ValidationError
+from skinfer import schema_inferer
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('json_schema',
+                        help='Path to the json schema file')
+    parser.add_argument('instances', nargs='+', metavar='INSTANCE',
+                        help='JSON data files to be validated')
+    parser.add_argument('--jsonlines', action='store_true',
+                        help='Assume instances are in JSON lines format')
+    return parser.parse_args()
+
+
+def load_json(filepath):
+    with open(filepath) as f:
+        return json.load(f)
+
+
+def error_message(position, error):
+    def convert(x):
+        return '[%r]' % x
+    field = ''.join(convert(x) for x in error.relative_path)
+    return 'Failed validation for field %s in entry %d: %s' % (field, position, error.message)
+
+
+def run_validation(schema, instances):
+    errors = 0
+    total = 0
+    for i, item in enumerate(instances, 1):
+        total += 1
+        try:
+            validate(item, schema)
+        except ValidationError as e:
+            errors += 1
+            print(error_message(i, e))
+
+    print("%d errors found in %d items validated" % (errors, total))
+
+
+def run(args):
+    schema = load_json(args.json_schema)
+    Draft4Validator.check_schema(schema)
+
+    try:
+        instances = schema_inferer.load_samples(args.instances, args.jsonlines)
+        run_validation(schema, instances)
+    except ValueError as e:
+        if 'Extra data:' in e.message:
+            instances = schema_inferer.load_samples(args.instances, jsonlines=True)
+            run_validation(schema, instances)
+        else:
+            raise
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    run(args)
