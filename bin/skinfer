@@ -9,19 +9,12 @@ import json
 from skinfer import schema_inferer
 
 
-def get_samples(samples, jsonlines=False):
-    if jsonlines:
-        return schema_inferer.load_samples_from_jsonlines(samples)
-
-    return schema_inferer.load_samples_from_json(samples)
-
-
 def write_schema(schema):
     print(json.dumps(schema, indent=4))
 
 
 def try_infer_schema(args):
-    samples = get_samples(args.samples, args.jsonlines)
+    samples = schema_inferer.load_samples(args.samples, args.jsonlines)
     return schema_inferer.generate_and_merge_schemas(samples)
 
 
