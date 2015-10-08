@@ -11,7 +11,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='skinfer',
-    version='0.1.2',
+    version='0.2.0',
     description='Simple tool to merge JSON schemas',
     long_description=readme + '\n\n' + history,
     author='Scrapinghub',
