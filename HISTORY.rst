@@ -3,6 +3,16 @@
 History
 -------
 
+
+0.2.0 (2015-08-10)
+------------------
+
+* Renamed entry-point script schema_inferer -> skinfer
+* Added json_validator
+* Dropped Python 2.6 support
+* Added more tests
+
+
 0.1.2 (2015-08-04)
 ------------------
 
