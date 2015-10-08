@@ -4,7 +4,7 @@ History
 -------
 
 
-0.2.0 (2015-08-10)
+0.2.0 (2015-10-10)
 ------------------
 
 * Renamed entry-point script schema_inferer -> skinfer
