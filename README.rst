@@ -11,8 +11,11 @@ Skinfer - tool for working with JSON schemas
 .. image:: https://pypip.in/d/skinfer/badge.png
         :target: https://pypi.python.org/pypi/skinfer
 
+Data by itself is not that useful if you don't have a way to describe it. `Scrapinghub`_ engineers developed Skinfer to automatically discover the schema of a dataset by analyzing multiple JSON samples and merging the schemas from them.
 
-Simple tool to infer and/or merge JSON schemas
+.. _Scrapinghub: http://scrapinghub.com
+
+Skinfer is a simple tool to infer and/or merge JSON schemas
 
 * Free software: BSD license
 * Documentation: https://skinfer.readthedocs.org.
