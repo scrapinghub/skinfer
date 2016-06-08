@@ -9,9 +9,9 @@ script: tox
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: eljunior
+  user: scrapinghub
   password:
-    secure: QqknrtagKtsIjvniww4APNjnvolWG6FSmY9ql3OOwKfeW8XA6QQdI/waCBx/TiDkKFBDlC/TYIDJVtsks8kSZQ5i42zJ1MpQtSQx0dqA8vrRQxHh44RoUGaIHB4YvKs1UXH2e2O5coMkhXdU+MHn+GRAvuw9B+v4zoP+NGp4uec=
+    secure: Uys+MPglnS5WMNN98aUU78tAl2HUSRsqLAVRENNe2f9EabPp3sSeSBMU7rw9hinFJO0JU22mNh1hwR42wPv+OA8o/3QSEswS53noGNoK3pQjeByn1rEiRHSqEJdMxH1EmsyH44AR/6EU6NcnybtGLSjhPBdbZFRdDXp+mgO4v2Y=
   on:
     tags: true
     repo: scrapinghub/skinfer
